@@ -1,39 +1,38 @@
 package com.in.stack08;
 
+public class Main {
 
-class Solution {
-	public int trap(int[] height) {
+	public static int trap(int[] height) {
 		int left = 0;
 		int right = height.length - 1;
 		int leftMax = 0;
 		int rightMax = 0;
-		int trappedWater = 0;
+		int totalWater = 0;
 
 		while (left < right) {
 			if (height[left] < height[right]) {
 				if (height[left] >= leftMax) {
 					leftMax = height[left];
 				} else {
-					trappedWater += leftMax - height[left];
+					totalWater += leftMax - height[left];
 				}
 				left++;
 			} else {
 				if (height[right] >= rightMax) {
 					rightMax = height[right];
 				} else {
-					trappedWater += rightMax - height[right];
+					totalWater += rightMax - height[right];
 				}
 				right--;
 			}
 		}
 
-		return trappedWater;
+		return totalWater;
 	}
-}
-
-class Main {
 
 	public static void main(String[] args) {
-
+		int[] height = { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 };
+		int waterTrapped = trap(height);
+		System.out.println("Amount of water trapped: " + waterTrapped);
 	}
 }

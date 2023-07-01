@@ -3,42 +3,38 @@ package com.in.stack07;
 import java.util.Stack;
 
 class Main {
-    public static int evaluatePostfix(String postfix) {
-        Stack<Integer> stack = new Stack<>();
+	private Stack<Integer> stack;
+	private Stack<Integer> minStack;
 
-        for (int i = 0; i < postfix.length(); i++) {
-            char ch = postfix.charAt(i);
+/** Initialize your data structure here. */
+public Main() {
+    stack = new Stack<>();
+    minStack = new Stack<>();
+}
 
-            if (Character.isDigit(ch)) {
-                stack.push(ch - '0');
-            } else {
-                int operand2 = stack.pop();
-                int operand1 = stack.pop();
+	/** Push element x onto the stack. */
+	public void push(int x) {
+		stack.push(x);
+		if (minStack.isEmpty() || x <= minStack.peek()) {
+			minStack.push(x);
+		}
+	}
 
-                switch (ch) {
-                    case '+':
-                        stack.push(operand1 + operand2);
-                        break;
-                    case '-':
-                        stack.push(operand1 - operand2);
-                        break;
-                    case '*':
-                        stack.push(operand1 * operand2);
-                        break;
-                    case '/':
-                        stack.push(operand1 / operand2);
-                        break;
-                }
-            }
-        }
+	/** Removes the element on top of the stack. */
+	public void pop() {
+		int removed = stack.pop();
+		if (removed == minStack.peek()) {
+			minStack.pop();
+		}
+	}
 
-        return stack.pop();
-    }
+	/** Get the top element of the stack. */
+	public int top() {
+		return stack.peek();
+	}
 
-    public static void main(String[] args) {
-        String postfix = "532*+";
-        int result = evaluatePostfix(postfix);
-        System.out.println("Postfix expression: " + postfix);
-        System.out.println("Result: " + result);
-    }
+	/** Retrieve the minimum element in the stack. */
+	public int getMin() {
+		return minStack.peek();
+	}
 }
